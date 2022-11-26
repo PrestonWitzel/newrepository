@@ -10,10 +10,8 @@ public class Player extends Entity {
 	long collisionTimer = System.nanoTime();
 	long shootingDelay = 200;
 	long collisionDelay = 2000;;
-	Color color;
-	Color outline;
+
 	
-	collisionChecker cc;
 	
 	public Player(GamePanel gp, KeyHandler kh) { //Constructor
 		this.gp = gp;
@@ -22,13 +20,12 @@ public class Player extends Entity {
 	}
 	
 	public void setDefaultValues( ) { //Initialize variables
-		setSize(50);
-		setX((gp.screenWidth/2) - (size/2));
-		setY(gp.screenHeight - 90);
-		setSpeed(3);
+		size = 50;
+		x = gp.screenWidth/2;
+		y = gp.screenHeight - 90;
+		speed = 3;
 		health = 100;
-		cc = new collisionChecker(gp);
-		setPower(0);
+		power = 0;
 		color = Color.WHITE;
 		outline = Color.WHITE;
 		r = size/2;
@@ -54,20 +51,36 @@ public class Player extends Entity {
 			for(int i = 0; i < GamePanel.enemies.size(); i++) {
 				Enemy e = GamePanel.enemies.get(i);
 				checkCollision(e); //Check for collision with enemies
+				
+				if(collision == true) {
+					outline = Color.red;
+					long currentTime = System.nanoTime();
+					long differenceTime = currentTime - collisionTimer;
+					differenceTime /= 1000000;
+					if(differenceTime >= collisionDelay) {
+						health -= e.getDamage();
+						
+						collisionTimer = System.nanoTime();
+					}
+				}
+				
+				if(!collision) {
+					outline = Color.white;
+				}
 			}
 
 				
 				
-			if(kh.down == true && y + r/2 <= (gp.screenHeight - r*2)) {
+			if(kh.down == true && y + r <= gp.screenHeight) {
 				y += speed;
 			}
-			if(kh.left == true && x + r/2 >= 0) {
+			if(kh.left == true && x - r >= 0) {
 				x -= speed;
 			}
-			if(kh.right == true && x + r/2 <= (gp.screenWidth - r*2)) {
+			if(kh.right == true && x + r <= gp.screenWidth) {
 				x += speed;
 			}
-			if(kh.up == true && y + r/2 >= 0) {
+			if(kh.up == true && y - r >= 0) {
 				y -= speed;
 			}
 		
@@ -83,24 +96,11 @@ public class Player extends Entity {
 			}
 		
 			//Collision/Health function
-			if(collision == true) {
-				outline = Color.red;
-				long currentTime = System.nanoTime();
-				long differenceTime = currentTime - collisionTimer;
-				differenceTime /= 1000000;
-				if(differenceTime >= collisionDelay) {
-					health -= 1;
-					
-					collisionTimer = System.nanoTime();
-				}
-			}
 			
-			if(!collision) {
-				outline = Color.white;
-			}
 		}
 		
 		if(health <= 0) {
+			GamePanel.explosions.add(new Explosion(gp, size * 2, x, y));
 			x = 999;
 			y = 999;
 		}

@@ -80,14 +80,18 @@ public class Entity {
 	}
 	
 	public void setDeleted(boolean isDeleted) {
-		isDeleted = deleted;
+		deleted = isDeleted;
+	}
+	
+	public int getSize() {
+		return size;
 	}
 	
 	
 	public void checkCollision(Entity e) {
 		
 		int ex = e.getX();
-		int ey = e.getX();
+		int ey = e.getY();
 		int er = e.getR();
 		
 		int dx = x - ex;
@@ -96,7 +100,7 @@ public class Entity {
 		
 		
 		double dist = Math.sqrt(dx*dx + dy*dy);
-		System.out.println(dist);
+		
 		if(dist <= er + r) {
 			collision = true;
 		}

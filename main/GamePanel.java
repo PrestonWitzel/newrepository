@@ -23,6 +23,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 	public static ArrayList<Bullet> bullets = new ArrayList<Bullet>(); // Bullets
 	public static ArrayList<Enemy> enemies = new ArrayList<Enemy>(); // Enemies
+	public static ArrayList<Explosion> explosions = new ArrayList<Explosion>(); // Explosions
 
 	public GamePanel() { // Constructor
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -63,12 +64,14 @@ public class GamePanel extends JPanel implements Runnable {
 		g2.fillRect(0, 0, screenWidth, screenHeight);
 
 		// Draw objects
-		player.draw(g2);
-
+		
+		for (Explosion ex : explosions) {
+			ex.draw(g2);
+		}
 		for (Bullet b : bullets) {
 			b.draw(g2);
 		}
-
+		player.draw(g2);
 		for (Enemy e : enemies) {
 			e.draw(g2);
 		}
@@ -168,12 +171,16 @@ public class GamePanel extends JPanel implements Runnable {
 		for (Enemy e : enemies) {
 			e.update();
 		}
+		for (Explosion ex : explosions) {
+			ex.update();
+		}
 
 		// Check enemies and bullets for removal
 		for (int i = 0; i < enemies.size(); i++) {
 			Enemy e = enemies.get(i);
 			int x = e.getX();
 			int y = e.getY();
+			int size = e.getSize();
 			int newPower = e.getPower() - 1;
 
 			if (e.getDeleted() == true) {
@@ -183,11 +190,11 @@ public class GamePanel extends JPanel implements Runnable {
 					enemies.add(new Enemy(this, newPower, x, y));
 				}
 		
-				enemies.remove(i);
+				enemies.remove(i); explosions.add(new Explosion(this, size * 2, x, y));
 				i--;
 			}
 		}
 		bullets.removeIf(b -> b.getDeleted());
-
+		explosions.removeIf(ex -> ex.getDeleted());
 	}
 }

@@ -5,14 +5,9 @@ import java.awt.Graphics2D;
 
 public class Bullet extends Entity {
 	//Variables
-	private int x;
-	private int y;
-	private int speed;
+
 	private GamePanel gp;
-	private boolean collision;
-	private boolean deleted;
-	private Color color;
-	private int r;
+
 
 	public Bullet(GamePanel gp) { //Constructor
 		this.gp = gp;
@@ -22,9 +17,9 @@ public class Bullet extends Entity {
 	public void setDefaultValues() { //Initialize variables
 		color = Color.blue;
 		r = 5;
-		x = (gp.player.x + (gp.player.size/2) - (r/2));
+		x = gp.player.x;
 		y = gp.player.y;
-		speed = 1;
+		speed = 10;
 		collision = false;
 		deleted = false;
 	}
@@ -42,13 +37,13 @@ public class Bullet extends Entity {
 			
 			if(collision) {
 				e.getHit(1);
-				setDeleted(true);
+				deleted = true;
 			}
 		}
 		
 		
 		if (y < 0) { //Bullet only moves up
-			setDeleted(true);
+			deleted = true;
 		}
 		
 		y -= speed;

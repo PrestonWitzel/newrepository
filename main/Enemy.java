@@ -7,20 +7,11 @@ import java.awt.Graphics2D;
 public class Enemy extends Entity {
 	// Variables
 	private GamePanel gp;
-	int x;
-	int y;
+	
 	double dx;
 	double dy;
-	int speed;
-	int xVelocity;
-	int yVelocity;
-	int health;
-	int size;
-	boolean deleted;
-	int power;
 	int damage;
-	Color color;
-	int r;
+	
 
 	public Enemy(GamePanel gp, int power) { // Constructor
 		this.gp = gp;
@@ -46,31 +37,31 @@ public class Enemy extends Entity {
 
 		// Update variables based on 'power'
 		if (power == 0) {
-			damage = 3;
+			damage = 1;
 			health = 1;
 			speed = 3;
 			size = 20;
 			color = new Color(100, 150, 50, 100);
 		} else if (power == 1) {
-			damage = 5;
+			damage = 3;
 			health = 2;
 			speed = 3;
 			size = 20;
 			color = new Color(50, 250, 70, 100);
 		} else if (power == 2) {
-			damage = 6;
+			damage = 4;
 			health = 3;
 			speed = 3;
 			size = 23;
 			color = new Color(110, 20, 90, 100);
 		} else if (power == 3) {
-			damage = 9;
+			damage = 4;
 			health = 5;
 			speed = 2;
 			size = 25;
 			color = new Color(0, 200, 250, 100);
 		} else if (power == 4) {
-			damage = 9;
+			damage = 5;
 			health = 5;
 			speed = 2;
 			size = 26;
@@ -101,7 +92,7 @@ public class Enemy extends Entity {
 			color = new Color(255, 255, 0, 100);
 		}
 		
-		speed = 1;
+		
 
 		// Randomize x, y, and angle
 		dx = (Math.cos(angle) * speed);
@@ -130,23 +121,23 @@ public class Enemy extends Entity {
 		if (health > 0) {
 			// Bouncing function that only runs when the enemy is alive
 
-			if (x < 0) {
-				x = 0;
+			if (x - r < 0) {
+				x = 0 + r;
 				dx = -dx;
 			}
 
-			if((x + r / 2) > gp.screenWidth) {
+			if(x + r > gp.screenWidth) {
 				x = gp.screenWidth - r;
 				dx = -dx;
 			}
 
-			if (y < 0) {
+			if (y - r < 0) {
 				
-				y = 0;
+				y = 0 + r;
 				dy = -dy;
 			}
 			
-			if((y + r / 2) > gp.screenHeight) {
+			if(y + r > gp.screenHeight) {
 				y = gp.screenHeight - r;
 				dy = -dy;
 			}
@@ -164,5 +155,9 @@ public class Enemy extends Entity {
 	
 	public void getHit(int damage) {
 		health-= damage;
+	}
+	
+	public int getDamage() {
+		return damage;
 	}
 }
