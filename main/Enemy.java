@@ -132,7 +132,7 @@ public class Enemy extends Entity {
 			}
 
 		} else {
-			gp.player.setPower(gp.player.getPower() + (power + 1));
+			gp.player.setPower(gp.player.getPower() + (power + 1)); gp.player.setScore(gp.player.getScore() + (1 + (power * 3)));
 			deleted = true;
 		}
 

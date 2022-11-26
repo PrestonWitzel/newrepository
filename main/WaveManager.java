@@ -50,11 +50,13 @@ public class WaveManager {
 			g2.drawString("Health: " + gp.player.getHealth(), 10, 20);
 
 			g2.drawString("Wave: " + wave, 10, 40);
+			
+			g2.drawString("Score: " + gp.player.getScore(), 10, 60);
 
 			g2.drawString("Power: " + gp.player.power, 10, gp.screenHeight - 20);
 
 		} else if (gp.player.health <= 0) {
-			g2.drawString("You died", 10, 20);
+			g2.drawString("You died! Score: " + gp.player.getScore(), 10, 20);
 		}
 
 	}
