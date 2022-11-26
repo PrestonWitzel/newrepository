@@ -4,18 +4,16 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
-	
+
 	public boolean up;
 	public boolean down;
 	public boolean left;
 	public boolean right;
 	public boolean shooting;
-	
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -29,24 +27,24 @@ public class KeyHandler implements KeyListener {
 		int code = e.getKeyCode();
 		handleKeys(code, false);
 	}
-	
+
 	private void handleKeys(int code, boolean isPressed) {
-		if(code == KeyEvent.VK_W) {
+		if (code == KeyEvent.VK_W) {
 			up = isPressed;
 		}
-		if(code == KeyEvent.VK_S) {
+		if (code == KeyEvent.VK_S) {
 			down = isPressed;
 		}
-		if(code == KeyEvent.VK_A) {
+		if (code == KeyEvent.VK_A) {
 			left = isPressed;
 		}
-		if(code == KeyEvent.VK_D) {
+		if (code == KeyEvent.VK_D) {
 			right = isPressed;
 		}
-		if(code == KeyEvent.VK_SPACE) {
+		if (code == KeyEvent.VK_SPACE) {
 			shooting = isPressed;
 		}
-		
+
 	}
 
 }

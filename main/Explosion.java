@@ -11,27 +11,30 @@ public class Explosion {
 	boolean deleted = false;
 	int x, y;
 	int size;
+	int enemySize;
 	int r;
 
-	public Explosion(GamePanel gp, int size, int x, int y) { //Constructor
-			this.gp = gp;
-			this.size = size;
-			this.x = x; this.y = y;
-			setDefaultValues();
+	public Explosion(GamePanel gp, int size, int x, int y) {
+		this.gp = gp;
+		this.size = size;
+		this.enemySize = size / 2;
+		this.x = x;
+		this.y = y;
+		setDefaultValues();
 	}
 
-	public void setDefaultValues() { // Initialize variables
+	public void setDefaultValues() {
 		opacity = 150;
 		color = new Color(255, 255, 255, opacity);
-		r = size/2;
+		r = size / 2;
 	}
 
 	public void update() {
 		opacity -= 5;
-		size += 2;
-		r = size/2;
-		
-		if(opacity <= 0) {
+		size += (enemySize - 18);
+		r = size / 2;
+
+		if (opacity <= 0) {
 			color = new Color(255, 255, 255, 0);
 			deleted = true;
 		} else {
@@ -43,7 +46,7 @@ public class Explosion {
 		g2.setColor(color);
 		g2.fillOval(x - r, y - r, size, size);
 	}
-	
+
 	public boolean getDeleted() {
 		return deleted;
 	}

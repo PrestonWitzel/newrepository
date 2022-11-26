@@ -5,20 +5,17 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Enemy extends Entity {
-	// Variables
-	private GamePanel gp;
-	
-	double dx;
-	double dy;
-	int damage;
-	
 
-	public Enemy(GamePanel gp, int power) { // Constructor
+	private GamePanel gp;
+
+	int damage;
+
+	public Enemy(GamePanel gp, int power) {
 		this.gp = gp;
 		this.power = power;
 		setDefaultValues();
 	}
-	
+
 	public Enemy(GamePanel gp, int power, int x, int y) {
 		this.gp = gp;
 		this.power = power;
@@ -27,15 +24,13 @@ public class Enemy extends Entity {
 		this.y = y;
 	}
 
-	public void setDefaultValues() { // Initialize variables
-
+	public void setDefaultValues() {
 
 		y = 100;
 
 		double degrees = (Math.random() * 360);
 		double angle = Math.toRadians(degrees);
 
-		// Update variables based on 'power'
 		if (power == 0) {
 			damage = 1;
 			health = 1;
@@ -91,25 +86,20 @@ public class Enemy extends Entity {
 			size = 120;
 			color = new Color(255, 255, 0, 100);
 		}
-		
-		
 
-		// Randomize x, y, and angle
 		dx = (Math.cos(angle) * speed);
 		dy = (Math.sin(angle) * speed);
 
-		x = (int) (Math.random() * gp.screenWidth - (size*3) + (size + 10));
+		x = (int) (Math.random() * gp.screenWidth - (size * 3) + (size + 10));
 
-		
-		r = size/2;
+		r = size / 2;
 	}
 
 	public void draw(Graphics2D g2) {
-		// Draw enemy
+
 		g2.setColor(color);
 		g2.fillOval(x - r, y - r, r * 2, r * 2);
 
-		// Draw outline
 		g2.setStroke(new BasicStroke(3));
 		g2.setColor(color.darker());
 		g2.drawOval(x - r, y - r, r * 2, r * 2);
@@ -119,44 +109,42 @@ public class Enemy extends Entity {
 
 	public void update() {
 		if (health > 0) {
-			// Bouncing function that only runs when the enemy is alive
 
 			if (x - r < 0) {
 				x = 0 + r;
 				dx = -dx;
 			}
 
-			if(x + r > gp.screenWidth) {
+			if (x + r > gp.screenWidth) {
 				x = gp.screenWidth - r;
 				dx = -dx;
 			}
 
 			if (y - r < 0) {
-				
+
 				y = 0 + r;
 				dy = -dy;
 			}
-			
-			if(y + r > gp.screenHeight) {
+
+			if (y + r > gp.screenHeight) {
 				y = gp.screenHeight - r;
 				dy = -dy;
 			}
 
-			
 		} else {
-			
+			gp.player.setPower(gp.player.getPower() + (power + 1));
 			deleted = true;
 		}
-		
+
 		x += dx;
 		y += dy;
 
 	}
-	
+
 	public void getHit(int damage) {
-		health-= damage;
+		health -= damage;
 	}
-	
+
 	public int getDamage() {
 		return damage;
 	}

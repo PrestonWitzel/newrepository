@@ -4,17 +4,32 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Bullet extends Entity {
-	//Variables
 
 	private GamePanel gp;
+	int angle;
 
-
-	public Bullet(GamePanel gp) { //Constructor
+	public Bullet(GamePanel gp) {
 		this.gp = gp;
 		setDefaultValues();
 	}
 
-	public void setDefaultValues() { //Initialize variables
+	public Bullet(GamePanel gp, int angle) {
+		this.gp = gp;
+		setDefaultValues();
+
+		this.angle = angle;
+
+	}
+
+	public Bullet(GamePanel gp, int angle, int x, int y) {
+		this.gp = gp;
+		setDefaultValues();
+
+		this.angle = angle;
+
+	}
+
+	public void setDefaultValues() {
 		color = Color.blue;
 		r = 5;
 		x = gp.player.x;
@@ -22,39 +37,38 @@ public class Bullet extends Entity {
 		speed = 10;
 		collision = false;
 		deleted = false;
+
 	}
 
-
-
 	public void update() {
+		double rad = Math.toRadians(angle);
+		dx = (int) (Math.cos(rad) * speed);
+		dy = (int) (Math.sin(rad) * speed);
 
-		//Checks collision with every enemy
 		for (int i = 0; i < GamePanel.enemies.size(); i++) {
 			Enemy e = GamePanel.enemies.get(i);
-			
 
 			checkCollision(e);
-			
-			if(collision) {
+
+			if (collision) {
 				e.getHit(1);
 				deleted = true;
 			}
 		}
-		
-		
-		if (y < 0) { //Bullet only moves up
+
+		if (y < 0 || y > gp.screenHeight || x < 0 || x > gp.screenWidth) {
 			deleted = true;
 		}
-		
-		y -= speed;
+
+		y += dy;
+		x += dx;
 
 	}
 
 	public void draw(Graphics2D g2) {
-		//Draws this bullet
+
 		g2.setColor(color);
-		g2.fillOval(x - r, y - r, r*2, r*2);
+		g2.fillOval(x - r, y - r, r * 2, r * 2);
 	}
-	
 
 }
