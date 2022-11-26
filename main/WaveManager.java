@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 public class WaveManager {
 	GamePanel gp;
 	boolean addEnemies = false;
-	boolean waveScene = false;
 	long waveTimer = System.nanoTime();;
 	long currentTime = System.nanoTime();
 	long waveDelay = 5000;
@@ -25,7 +24,6 @@ public class WaveManager {
 
 			wave++;
 			addEnemies = true;
-			waveScene = true;
 
 			waveTimer = System.nanoTime();
 		}
