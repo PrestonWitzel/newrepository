@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 
 public class Enemy extends Entity {
 
-	private GamePanel gp;
+	protected GamePanel gp;
 
 	int damage;
 
@@ -27,6 +27,8 @@ public class Enemy extends Entity {
 	public void setDefaultValues() {
 
 		y = 100;
+		int rand = (int) (Math.random()*300);
+		y += rand;
 
 		double degrees = (Math.random() * 360);
 		double angle = Math.toRadians(degrees);
@@ -79,7 +81,7 @@ public class Enemy extends Entity {
 			speed = 2;
 			size = 80;
 			color = new Color(255, 255, 255, 100);
-		} else if (power == 8) {
+		} else if (power >= 8) {
 			damage = 17;
 			health = 32;
 			speed = 2;
@@ -108,6 +110,7 @@ public class Enemy extends Entity {
 	}
 
 	public void update() {
+		
 		if (health > 0) {
 
 			if (x - r < 0) {
@@ -132,7 +135,7 @@ public class Enemy extends Entity {
 			}
 
 		} else {
-			gp.player.setPower(gp.player.getPower() + (power + 1)); gp.player.setScore(gp.player.getScore() + (1 + (power * 3)));
+			gp.player.setPower(gp.player.getPower() + (power + 1));
 			deleted = true;
 		}
 

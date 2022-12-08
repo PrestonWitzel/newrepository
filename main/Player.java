@@ -10,7 +10,6 @@ public class Player extends Entity {
 	long collisionTimer = System.nanoTime();
 	long shootingDelay = 200;
 	long collisionDelay = 2000;
-	int score = 0;
 
 	int rot = 0;
 
@@ -85,9 +84,9 @@ public class Player extends Entity {
 					if (power < 100) {
 						GamePanel.bullets.add(new Bullet(gp, 270));
 					} else if (power >= 100 && power < 250) {
-						
-						GamePanel.bullets.add(new Bullet(gp, 280));
-						GamePanel.bullets.add(new Bullet(gp, 260));
+						GamePanel.bullets.add(new Bullet(gp, 270));
+						GamePanel.bullets.add(new Bullet(gp, 285));
+						GamePanel.bullets.add(new Bullet(gp, 255));
 					} else if (power >= 250 && power < 1000) {
 						GamePanel.bullets.add(new Bullet(gp, 270));
 						GamePanel.bullets.add(new Bullet(gp, 285));
@@ -125,17 +124,10 @@ public class Player extends Entity {
 
 		if (health <= 0) {
 			GamePanel.explosions.add(new Explosion(gp, size * 2, x, y));
-			
+			x = 999;
+			y = 999;
 		}
 
-	}
-	
-	public int getScore() {
-		return score;
-	}
-	
-	public void setScore(int score) {
-		this.score = score;
 	}
 
 }

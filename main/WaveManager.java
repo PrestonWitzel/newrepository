@@ -24,21 +24,21 @@ public class WaveManager {
 
 			wave++;
 			addEnemies = true;
-
 			waveTimer = System.nanoTime();
 		}
 
 		if (addEnemies) {
 			for (int i = 0; i < wave * 2; i++) {
 				int power = 0;
-				
-				if(wave <= 9) {
-					power = (int) (Math.random() * wave);
-				} else if(wave > 9) {
-					power = (int) (Math.random() * 9);
+
+				power = (int) (Math.random() * wave);
+
+				int j = (int) (Math.random()*50);
+				if(j >= 30) {
+					gp.enemies.add(new ShooterEnemy(gp, power));
+				} else if(j < 30) {
+					gp.enemies.add(new Enemy(gp, power));
 				}
-				
-				gp.enemies.add(new Enemy(gp, power));
 			}
 			addEnemies = false;
 		}
@@ -50,13 +50,12 @@ public class WaveManager {
 			g2.drawString("Health: " + gp.player.getHealth(), 10, 20);
 
 			g2.drawString("Wave: " + wave, 10, 40);
-			
-			g2.drawString("Score: " + gp.player.getScore(), 10, 60);
 
 			g2.drawString("Power: " + gp.player.power, 10, gp.screenHeight - 20);
 
 		} else if (gp.player.health <= 0) {
-			g2.drawString("You died! Score: " + gp.player.getScore(), 10, 20);
+			g2.drawString("You died", 10, 20);
+			
 		}
 
 	}

@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 public class Bullet extends Entity {
 
-	private GamePanel gp;
+	protected GamePanel gp;
 	int angle;
 
 	public Bullet(GamePanel gp) {
@@ -24,7 +24,7 @@ public class Bullet extends Entity {
 	public Bullet(GamePanel gp, int angle, int x, int y) {
 		this.gp = gp;
 		setDefaultValues();
-
+		this.x = x; this.y = y;
 		this.angle = angle;
 
 	}

@@ -6,16 +6,17 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
+
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
 
 	Thread gameThread;
 	KeyHandler kh = new KeyHandler();
-	Player player = new Player(this, kh);
+	public Player player = new Player(this, kh);
 	WaveManager wm = new WaveManager(this);
-	public static int screenWidth = 1500;
-	public static int screenHeight = 900;
+	public static int screenWidth = 1000;
+	public static int screenHeight = 650;
 
 	public static ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
@@ -25,6 +26,7 @@ public class GamePanel extends JPanel implements Runnable {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setFocusable(true);
 		this.addKeyListener(kh);
+		
 
 		startGame();
 	}
@@ -39,9 +41,12 @@ public class GamePanel extends JPanel implements Runnable {
 	public void run() {
 		while (gameThread != null) {
 
+			if(!kh.paused) {
+				update();
+			}
 			repaint();
-			update();
 
+			
 			try {
 				Thread.sleep(17);
 			} catch (InterruptedException e) {
@@ -72,6 +77,12 @@ public class GamePanel extends JPanel implements Runnable {
 
 		wm.draw(g2);
 
+		if(kh.paused) {
+			g2.setColor(new Color(255, 255, 255, 50));
+			g2.fillRect(0, 0, screenWidth, screenHeight);
+			g2.setColor(Color.WHITE);
+			g2.drawString("Paused", 10, 60);
+		}
 		g2.dispose();
 	}
 
@@ -101,8 +112,8 @@ public class GamePanel extends JPanel implements Runnable {
 			if (e.getDeleted() == true) {
 				if (e.getPower() > 0) {
 
-					enemies.add(new Enemy(this, newPower, x, y));
-					enemies.add(new Enemy(this, newPower, x, y));
+					enemies.add(new ShooterEnemy(this, newPower, x, y));
+					enemies.add(new ShooterEnemy(this, newPower, x, y));
 				}
 
 				enemies.remove(i);

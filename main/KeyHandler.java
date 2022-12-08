@@ -9,17 +9,25 @@ public class KeyHandler implements KeyListener {
 	public boolean down;
 	public boolean left;
 	public boolean right;
-	public boolean shooting;
+	public boolean esc;
+	public boolean shooting, paused;
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 
-	}
+	}	
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
 		handleKeys(code, true);
+		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			if (!paused) {
+				paused = true;
+			} else {
+				paused = false;
+			}
+		}
 	}
 
 	@Override
@@ -43,6 +51,9 @@ public class KeyHandler implements KeyListener {
 		}
 		if (code == KeyEvent.VK_SPACE) {
 			shooting = isPressed;
+		}
+		if (code == KeyEvent.VK_ESCAPE) {
+			esc = isPressed;
 		}
 
 	}
